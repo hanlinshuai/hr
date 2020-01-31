@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/beans/spring-util.xsd">
+
+    <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" id="credentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="1" />
+    </bean>
+    <!--自动定义realm-->
+    <bean class="com.wuhan.shiro.MyRealm" id="realm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+
+    <!--创建SecurityManager-->
+    <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
+        <!--注入realm-->
+        <property name="realm" ref="realm"/>
+    </bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="login.jsp"/>
+        <property name="unauthorizedUrl" value="403.jsp"/>
+        <property name="filterChainDefinitions">
+            <!--authc如果没有登录会跳到相应的登录页面登录-->
+            <!--anon匿名拦截器，即不需要登录即可访问；一般用于静态资源过滤；-->
+            <!--logout退出拦截器，主要属性：redirectUrl：退出成功后重定向的地址（/）-->
+            <value>
+                /login.jsp = anon
+                /index.jsp = authc
+                /*.action = authc
+                /logout=logout
+                /* = authc
+            </value>
+        </property>
+        <!--&lt;!&ndash;配置filter&ndash;&gt;-->
+        <!--<property name="filters">-->
+            <!--<util:map>-->
+                <!--<entry key="rolesOr" value-ref="rolesOrFilter" />-->
+            <!--</util:map>-->
+        <!--</property>-->
+    </bean>
+
+</beans>
