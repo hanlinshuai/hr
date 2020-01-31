@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 登录
  * @author:hanlin.yuan
- * @date:2020/1/30 0030
+ * @date:2020/1/30
  */
 @Repository
 public interface UserMapper {
@@ -20,8 +20,9 @@ public interface UserMapper {
     List<User> findUser();
 
     /**
-     * 修改用户
-     * @param user
+     * 根据账户名称，或者用户
+     * @param userName
+     * @return
      */
-    void updateUser(User user);
+    User findByUserName(String userName);
 }

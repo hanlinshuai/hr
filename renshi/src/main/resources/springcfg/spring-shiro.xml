@@ -8,13 +8,15 @@
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/beans/spring-util.xsd">
 
-    <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" id="credentialsMatcher">
-        <property name="hashAlgorithmName" value="md5"/>
-        <property name="hashIterations" value="1" />
-    </bean>
+    <!--<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" id="credentialsMatcher">-->
+        <!--&lt;!&ndash;加密方式&ndash;&gt;-->
+        <!--<property name="hashAlgorithmName" value="md5"/>-->
+        <!--&lt;!&ndash;加密次数&ndash;&gt;-->
+        <!--<property name="hashIterations" value="1" />-->
+    <!--</bean>-->
     <!--自动定义realm-->
     <bean class="com.wuhan.shiro.MyRealm" id="realm">
-        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+        <!--<property name="credentialsMatcher" ref="credentialsMatcher"/>-->
     </bean>
 
     <!--创建SecurityManager-->
@@ -33,6 +35,7 @@
             <!--logout退出拦截器，主要属性：redirectUrl：退出成功后重定向的地址（/）-->
             <value>
                 /login.jsp = anon
+                /login.action = anon
                 /index.jsp = authc
                 /*.action = authc
                 /logout=logout

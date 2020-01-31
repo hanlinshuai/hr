@@ -18,6 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUserName(String userName) {
-        return null;
+        return userMapper.findByUserName(userName);
     }
 }

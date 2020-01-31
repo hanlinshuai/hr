@@ -6,6 +6,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -40,6 +41,7 @@ public class MyRealm extends AuthorizingRealm {
         String password = new String((char[]) token.getCredentials());
 
         System.out.println("用户" + userName + "认证-----ShiroRealm.doGetAuthenticationInfo");
+        // 根据账户查询用户
         User user = userService.findByUserName(userName);
 
         if (user == null) {

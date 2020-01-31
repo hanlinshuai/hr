@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hanlin.mapper.UserMapper">
-    <!-- 查询所有Employee -->
-    <select id="findUser" parameterType="int" resultType="com.wuhan.bean.User">
+<mapper namespace="com.wuhan.mapper.UserMapper">
+    <!-- 查询所有用户 -->
+    <select id="findUser" resultType="com.wuhan.bean.User">
         SELECT * FROM user
     </select>
 
-    <select id="updateUser" parameterType="com.wuhan.bean.User" resultType="com.wuhan.bean.User">
-        update user set name=#{name},address=#{address} where id=#{id}
+
+    <!--根据账户名称查询用户-->
+    <select id="findByUserName" parameterType="string" resultType="com.wuhan.bean.User">
+        SELECT * FROM user where username=#{0}
     </select>
 
 </mapper>
