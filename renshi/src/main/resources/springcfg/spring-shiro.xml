@@ -23,6 +23,10 @@
     <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
         <!--注入realm-->
         <property name="realm" ref="realm"/>
+        <!--注入cookieRememberMeManager：处理cookie-->
+        <property name="rememberMeManager" ref="cookieRememberMeManager" />
+        <!--注入sessionManager：处理session的-->
+        <property name="sessionManager" ref="sessionManager" />
     </bean>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -36,10 +40,9 @@
             <value>
                 /login.jsp = anon
                 /login.action = anon
-                /index.jsp = authc
-                /*.action = authc
-                /logout=logout
-                /* = authc
+                /css/* = anon
+                /js/* = anon
+                /** = user
             </value>
         </property>
         <!--&lt;!&ndash;配置filter&ndash;&gt;-->
@@ -48,6 +51,26 @@
                 <!--<entry key="rolesOr" value-ref="rolesOrFilter" />-->
             <!--</util:map>-->
         <!--</property>-->
+    </bean>
+
+
+    <!-- 自动登录 -->
+    <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager" id="cookieRememberMeManager">
+        <property name="cookie" ref="cookie"></property>
+    </bean>
+
+    <bean class="org.apache.shiro.web.servlet.SimpleCookie" id="cookie">
+        <constructor-arg name="name" value="rememberMe" />
+        <!--cookie存活时间(s)-->
+        <property name="maxAge" value="10000" />
+    </bean>
+
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 配置session的失效时间 -->
+        <property name="globalSessionTimeout" value="10000"/>
+        <!-- 删除无效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
     </bean>
 
 </beans>

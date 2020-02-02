@@ -39,13 +39,14 @@ public class LoginController {
      * 用户登录
      * @param username 用户账号
      * @param password 用户密码
+     * @param rememberMe 记住登录
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject login(String username, String password) {
+    public ResultObject login(String username, String password,Boolean rememberMe) {
         LOGGER.info("用户："+username+"登录系统");
-        ResultObject resultObject =  loginService.login(username,password);
+        ResultObject resultObject =  loginService.login(username,password,rememberMe);
         return resultObject;
     }
 

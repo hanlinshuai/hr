@@ -53,6 +53,15 @@
 .form .register-form {
   display: none;
 }
+.form p {
+	text-align: left;
+	margin: 0;
+	font-size: 13px;
+}
+.form p input {
+	width: auto;
+	margin-right: 10px;	
+}	
 .container {
   position: relative;
   z-index: 1;

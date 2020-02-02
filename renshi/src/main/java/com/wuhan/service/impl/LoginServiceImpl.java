@@ -18,11 +18,13 @@ public class LoginServiceImpl implements LoginService {
 
     private static final Logger LOGGER = Logger.getLogger(LoginServiceImpl.class);
     @Override
-    public ResultObject login(String username, String password) {
+    public ResultObject login(String username, String password, Boolean rememberMe) {
         ResultObject resultObject = new ResultObject();
         // 加密密码
         String encrypt = MD5Utils.encrypt(password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, encrypt);
+        rememberMe = rememberMe == null ? false : rememberMe;
+        token.setRememberMe(rememberMe);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);

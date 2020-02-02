@@ -3,6 +3,7 @@ package com.wuhan.bean;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 @Data
 @ToString
-public class User {
+public class User implements Serializable {
     private Integer id;
     /**用户名称*/
     private String userName;

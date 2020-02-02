@@ -11,7 +11,8 @@ public interface LoginService {
      * 登录
      * @param username 账户
      * @param password 密码
+     * @param rememberMe 自动登录
      * @return
      */
-    ResultObject login(String username, String password);
+    ResultObject login(String username, String password, Boolean rememberMe);
 }
