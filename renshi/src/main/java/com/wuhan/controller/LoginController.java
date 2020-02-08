@@ -23,10 +23,9 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping("/user")
+    @RequestMapping("/user.action")
     public String info(Model model ){
         model.addAttribute("name","张三");
-        System.out.println("123456789");
         return "test";
     }
 

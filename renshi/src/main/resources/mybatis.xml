@@ -9,7 +9,11 @@
 		<typeAlias alias="Student" type="com.yuan.bean.Student"/>
 	</typeAliases>-->
 	<!--   -->
+	<settings>
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
 	<mappers>
 		<mapper resource="mapper/UserMapper.xml" />
+		<mapper resource="mapper/RoleMapper.xml" />
 	</mappers>
 </configuration>

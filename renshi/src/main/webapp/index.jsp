@@ -14,5 +14,6 @@
     <body>
         <h2>Hello World!</h2>${name}
         <a href="/logout">注销</a>
+        <a href="/user.action">测试</a>
     </body>
 </html>

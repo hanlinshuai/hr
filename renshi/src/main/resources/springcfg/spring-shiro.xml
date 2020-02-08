@@ -27,6 +27,8 @@
         <property name="rememberMeManager" ref="cookieRememberMeManager" />
         <!--注入sessionManager：处理session的-->
         <property name="sessionManager" ref="sessionManager" />
+        <!--缓存管理-->
+        <property name="cacheManager" ref="cacheManager"/>
     </bean>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -38,10 +40,13 @@
             <!--anon匿名拦截器，即不需要登录即可访问；一般用于静态资源过滤；-->
             <!--logout退出拦截器，主要属性：redirectUrl：退出成功后重定向的地址（/）-->
             <value>
+                /403.jsp = anon
                 /login.jsp = anon
                 /login.action = anon
+                /logout = logout
                 /css/* = anon
                 /js/* = anon
+                /user.action = roles["admin"]
                 /** = user
             </value>
         </property>
@@ -59,6 +64,7 @@
         <property name="cookie" ref="cookie"></property>
     </bean>
 
+    <!--自动登录的有效时间-->
     <bean class="org.apache.shiro.web.servlet.SimpleCookie" id="cookie">
         <constructor-arg name="name" value="rememberMe" />
         <!--cookie存活时间(s)-->
@@ -71,6 +77,11 @@
         <property name="globalSessionTimeout" value="10000"/>
         <!-- 删除无效的session -->
         <property name="deleteInvalidSessions" value="true"/>
+    </bean>
+
+    <!-- 缓存管理器 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
     </bean>
 
 </beans>

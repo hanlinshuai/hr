@@ -1,12 +1,20 @@
 package com.wuhan.shiro;
 
+import com.wuhan.bean.Role;
 import com.wuhan.bean.User;
+import com.wuhan.service.RoleService;
 import com.wuhan.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * shiro realm校验器
@@ -15,8 +23,17 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class MyRealm extends AuthorizingRealm {
 
+    public void clearCached() {
+        PrincipalCollection principals = SecurityUtils.getSubject()
+                .getPrincipals();
+        super.clearCache(principals);
+    }
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 授权
@@ -25,7 +42,21 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        String userName = user.getUserName();
+
+        System.out.println("用户" + userName + "获取权限-----ShiroRealm.doGetAuthorizationInfo");
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+
+        // 获取用户角色集合
+        List<Role> roleList = roleService.findByUserName(userName);
+        Set<String> roleSet = new HashSet<String>();
+        for (Role r : roleList) {
+            roleSet.add(r.getName());
+        }
+        simpleAuthorizationInfo.setRoles(roleSet);
+
+        return simpleAuthorizationInfo;
     }
 
     /**
