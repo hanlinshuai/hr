@@ -10,10 +10,27 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2020-01-31 14:38:38
+Date: 2020-02-08 15:43:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `memo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES ('1', 'admin', 'ÁÆ°ÁêÜÂëòË¥¶Êà∑');
+INSERT INTO `role` VALUES ('2', 'test', 'ÊµãËØïË¥¶Êà∑');
 
 -- ----------------------------
 -- Table structure for user
@@ -21,14 +38,32 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(255) DEFAULT NULL COMMENT '”√ªß√˚≥∆',
-  `password` varchar(255) DEFAULT NULL COMMENT '√‹¬Î',
-  `status` varchar(255) DEFAULT NULL COMMENT '◊¥Ã¨£∫1Œ™‘⁄÷∞£¨0Œ™À¯∂®',
-  `createTime` datetime DEFAULT NULL COMMENT '¥¥Ω® ±º‰',
+  `userName` varchar(255) DEFAULT NULL COMMENT 'Áî®Êà∑ÂêçÁß∞',
+  `password` varchar(255) DEFAULT NULL COMMENT 'ÂØÜÁ†Å',
+  `status` varchar(255) DEFAULT NULL COMMENT 'Áä∂ÊÄÅÔºö1‰∏∫Âú®ËÅåÔºå0‰∏∫ÈîÅÂÆö',
+  `createTime` datetime DEFAULT NULL COMMENT 'ÂàõÂª∫Êó∂Èó¥',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'admin', '47ec2dd791e31e2ef2076caf64ed9b3d', '1', '2020-01-31 12:14:48');
+INSERT INTO `user` VALUES ('2', 'test', '47ec2dd791e31e2ef2076caf64ed9b3d', '1', '2020-02-08 14:54:27');
+
+-- ----------------------------
+-- Table structure for user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) DEFAULT NULL COMMENT 'Áî®Êà∑id',
+  `roleid` int(11) DEFAULT NULL COMMENT 'ËßíËâ≤id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` VALUES ('1', '1', '1');
+INSERT INTO `user_role` VALUES ('2', '2', '2');
