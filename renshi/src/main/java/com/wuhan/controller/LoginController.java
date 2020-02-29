@@ -1,8 +1,11 @@
 package com.wuhan.controller;
 
 import com.wuhan.bean.ResultObject;
+import com.wuhan.bean.User;
 import com.wuhan.service.LoginService;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +32,34 @@ public class LoginController {
         return "test";
     }
 
+    /**
+     * 登录后首页
+     * @param model
+     * @return
+     */
     @RequestMapping("/index.action")
     public String index(Model model ){
-        return "index";
+        // 判断当用用户的角色
+        Integer is = loginService.isRole();
+        if (is.equals(0)||is.equals(1)){
+            return "backend/index";
+        }
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if (user!=null) {
+            model.addAttribute("username",user.getUserName());
+        }
+        return "frontend/index";
+    }
+
+
+    /**
+     * 首页跳转地址
+     * @param model
+     * @return
+     */
+    @RequestMapping("/backend/home.action")
+    public String home(Model model ){
+        return "backend/home";
     }
 
     /**

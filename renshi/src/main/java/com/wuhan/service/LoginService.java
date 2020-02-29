@@ -15,4 +15,10 @@ public interface LoginService {
      * @return
      */
     ResultObject login(String username, String password, Boolean rememberMe);
+
+    /**
+     * 获取当用户
+     * @return 0 为管理员   1位招聘   2位求职着
+     */
+    Integer isRole();
 }

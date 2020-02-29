@@ -48,4 +48,18 @@ public class LoginServiceImpl implements LoginService {
         }
         return resultObject;
     }
+
+    @Override
+    public Integer isRole() {
+        Subject subject = SecurityUtils.getSubject();
+        boolean admin = subject.hasRole("admin");
+        boolean boss = subject.hasRole("boss");
+        if (admin) {
+            return 0;
+        }
+        if (boss) {
+            return 1;
+        }
+        return 2;
+    }
 }

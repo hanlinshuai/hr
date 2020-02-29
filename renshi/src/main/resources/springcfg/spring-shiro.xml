@@ -40,12 +40,18 @@
             <!--anon匿名拦截器，即不需要登录即可访问；一般用于静态资源过滤；-->
             <!--logout退出拦截器，主要属性：redirectUrl：退出成功后重定向的地址（/）-->
             <value>
+                / = anon
                 /403.jsp = anon
                 /login.jsp = anon
+                /index.action = anon
                 /login.action = anon
+                /frontend/index.jsp =anon
+                /frontend/static/** = anon
+                /backend/static/** = anon
                 /logout = logout
                 /css/* = anon
                 /js/* = anon
+                /images/* = anon
                 /user.action = roles["admin"]
                 /** = user
             </value>
@@ -73,8 +79,8 @@
 
     <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <!-- 配置session的失效时间 -->
-        <property name="globalSessionTimeout" value="10000"/>
+        <!-- 配置session的失效时间(毫秒)-->
+        <property name="globalSessionTimeout" value="3600000"/>
         <!-- 删除无效的session -->
         <property name="deleteInvalidSessions" value="true"/>
     </bean>
